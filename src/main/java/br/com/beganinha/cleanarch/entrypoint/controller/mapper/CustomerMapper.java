@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 
 import br.com.beganinha.cleanarch.core.domain.Customer;
 import br.com.beganinha.cleanarch.entrypoint.controller.request.CustomerRequest;
+import br.com.beganinha.cleanarch.entrypoint.controller.response.CustomerResponse;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
@@ -13,5 +14,7 @@ public interface CustomerMapper {
 	@Mapping(target = "address", ignore = true)
 	@Mapping(target = "isValidCpf", ignore = true)
 	Customer toCustomer(CustomerRequest customerRequest);
+	
+	CustomerResponse toCustomerResponse(Customer customer);
 
 }

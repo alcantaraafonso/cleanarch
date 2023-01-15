@@ -14,7 +14,7 @@ public class CustomerEntity {
 	
 	private String name;
 	
-	private AddressEntity addressEntity;
+	private AddressEntity address;
 	
 	private String cpf;
 	

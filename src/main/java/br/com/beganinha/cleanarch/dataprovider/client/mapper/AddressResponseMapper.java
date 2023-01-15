@@ -8,6 +8,7 @@ import br.com.beganinha.cleanarch.dataprovider.client.response.AddressResponse;
 /**
  * O Mapstruct gera a implementação dessa interface, cujo objetivo é transformar um 
  * AddressResponse em Address
+ * Para que o Mapstruct consiga implementar a interface, todos os atributos da 
  * @author alcan
  *
  */
