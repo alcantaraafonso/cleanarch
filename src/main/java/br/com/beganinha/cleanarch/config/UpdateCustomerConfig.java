@@ -15,10 +15,10 @@ public class UpdateCustomerConfig {
 	public UpdateCustomerUseCaseImpl updateCustomerUseCase(UpdateCustomerImpl updateCustomer,
 			FindCustomerByIdUseCaseImpl findCustomerByIdUseCase,
 			FindAddressByZipCodeImpl findAddressByZipCode) {
-
+		
 		return new UpdateCustomerUseCaseImpl(updateCustomer,
-						findCustomerByIdUseCase, 
-						findAddressByZipCode);
-
+				findCustomerByIdUseCase, 
+				findAddressByZipCode);
+		
 	}
 }

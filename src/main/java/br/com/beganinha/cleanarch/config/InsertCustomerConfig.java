@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import br.com.beganinha.cleanarch.core.usecase.impl.InsertCustomerUseCaseImpl;
 import br.com.beganinha.cleanarch.dataprovider.FindAddressByZipCodeImpl;
 import br.com.beganinha.cleanarch.dataprovider.InsertCustomerImpl;
+import br.com.beganinha.cleanarch.dataprovider.SendCpfForValidationImpl;
 
 /**
  * O Bean amarra a implementação do Use Case, que implementa a interface do Use Case,
@@ -16,11 +17,11 @@ import br.com.beganinha.cleanarch.dataprovider.InsertCustomerImpl;
  */
 @Configuration
 public class InsertCustomerConfig {
-
+	
 	@Bean
 	public InsertCustomerUseCaseImpl insertCustomerUseCase(FindAddressByZipCodeImpl findAddressByZipCode,
-				InsertCustomerImpl insertCustomer) {
-		return new InsertCustomerUseCaseImpl(findAddressByZipCode, insertCustomer);
+			InsertCustomerImpl insertCustomer, SendCpfForValidationImpl sendCpfForValidationImpl) {
+		return new InsertCustomerUseCaseImpl(findAddressByZipCode, insertCustomer, sendCpfForValidationImpl);
 	}
 	
 }

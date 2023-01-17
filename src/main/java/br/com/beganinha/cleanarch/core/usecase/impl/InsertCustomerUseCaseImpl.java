@@ -2,6 +2,7 @@ package br.com.beganinha.cleanarch.core.usecase.impl;
 
 import br.com.beganinha.cleanarch.core.dataprovider.FindAddressByZipCode;
 import br.com.beganinha.cleanarch.core.dataprovider.InsertCustomer;
+import br.com.beganinha.cleanarch.core.dataprovider.SendCpfForValidation;
 import br.com.beganinha.cleanarch.core.domain.Customer;
 import br.com.beganinha.cleanarch.core.usecase.InsertCustomerUseCase;
 
@@ -12,9 +13,14 @@ public class InsertCustomerUseCaseImpl implements InsertCustomerUseCase {
 	
 	private final InsertCustomer insertCustomer;
 	
-	public InsertCustomerUseCaseImpl(FindAddressByZipCode findAddressByZipCode, InsertCustomer insertCustomer) {
+	private final SendCpfForValidation sendCpfForValidation;
+	
+	public InsertCustomerUseCaseImpl(FindAddressByZipCode findAddressByZipCode, 
+			InsertCustomer insertCustomer, 
+			SendCpfForValidation sendCpfForValidation) {
 		this.findAddressByZipCode = findAddressByZipCode;
 		this.insertCustomer = insertCustomer;
+		this.sendCpfForValidation =sendCpfForValidation;
 	}
 	
 	
@@ -25,8 +31,8 @@ public class InsertCustomerUseCaseImpl implements InsertCustomerUseCase {
 		customer.setAddress(address);
 		
 		insertCustomer.insert(customer);
+		
+		sendCpfForValidation.send(customer.getCpf());
 	}
 	
-	
-
 }
