@@ -21,7 +21,7 @@ import br.com.beganinha.cleanarch.entrypoint.controller.response.CustomerRespons
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
 	
 	@Autowired
@@ -37,7 +37,7 @@ public class CustomerController {
 	private UpdateCustomerUseCase updateCustomerUseCase;
 	
 	@Autowired
-	private DeleteCustomerByIdUseCase deleteCustomerByIDUseCase;
+	private DeleteCustomerByIdUseCase deleteCustomerByIdUseCase;
 
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
@@ -69,10 +69,10 @@ public class CustomerController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("/{id")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		
-		deleteCustomerByIDUseCase.delele(id);
+		deleteCustomerByIdUseCase.delele(id);
 		
 		return ResponseEntity.noContent().build();
 	}
