@@ -29,6 +29,6 @@ public class CustomerContoller {
         Customer customer = customerMapper.toCustomer(customerRequest);
         insertCustomerUseCase.insert(customer, customerRequest.getZipCode());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 }
