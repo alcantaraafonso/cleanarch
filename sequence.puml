@@ -1,0 +1,5 @@
+@startuml
+CustomerController -> InsertCustomerUseCase: Inserir Cliente
+InsertCustomerUseCase ->
+
+@enduml

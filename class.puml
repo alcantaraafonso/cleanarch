@@ -1,95 +1,104 @@
 @startuml
-package "core" {
-    package "domain" {
-        class Customer {
-            - String id
-            - String name
-            - String cpf
-            - Address address
-            - Boolean isValidCpf
-        }
-
-        class Address {
-            - String street
-            - String city
-            - String state
-        }
-    }
-    package "usecase" {
-        interface InsertCustomerUseCase {
-            {abstract} + insert(Customer customer): void
-        }
-
-        class InsertCustomerUseCaseImpl {
-            - InsertCustomer insertCustomer
+' -----------------------------------------------------
+'skinparam defaultTextAlignment center
+skinparam groupInheritance 2
+' -----------------------------------------------------
+'bottom to top direction
+left to right direction
+together {
+    package dataprovider {
+        class InsertCustomerImpl {
+            - CustomerRepository customerRepository
+            - CustomerEntityMapper customerEntityMapper
             + insert(Customer customer): void
-
-        }
-    }
-    package "dataprovider" {
-        interface InsertCustomer {
-            {abstract} + insert(Customer customer): void
-        }
-    }
-}
-package "dataprovider" {
-    class InsertCustomerImpl {
-        - CustomerRepository customerRepository
-        - CustomerEntityMapper customerEntityMapper
-        + insert(Customer customer): void
-    }
-
-    package "repository" {
-        interface CustomerRepository {
         }
 
-        interface MongoRepository {
-            {abstract} + insert(CustomerEntity entity): CustomerEntity
+        package repository {
+            interface CustomerRepository {
+            }
+
+            interface MongoRepository {
+                {abstract} + insert(CustomerEntity entity): CustomerEntity
+            }
+            package entity {
+                class CustomerEntity {
+                - String id
+                    - String name
+                    - String cpf
+                    - AddressEntity address
+                    - Boolean isValidCpf
+                }
+
+                class AddressEntity {
+                    - String street
+                    - String city
+                    - String state
+                }
+            }
+            package mapper {
+                interface CustomerEntityMapper {
+                    + toCustomerEntity(Customer customer): CustomerEntity
+                    + toCustomer(CustomerEntity customerEntity): Customer
+                }
+            }
         }
-        package "entity" {
-            class CustomerEntity {
-            - String id
+    }
+    package core {
+        package domain {
+            class Customer {
+                - String id
                 - String name
                 - String cpf
-                - AddressEntity address
+                - Address address
                 - Boolean isValidCpf
             }
 
-            class AddressEntity {
+            class Address {
                 - String street
                 - String city
                 - String state
             }
         }
-        package "mapper" {
-            interface CustomerEntityMapper {
-                + toCustomerEntity(Customer customer): CustomerEntity
-                + toCustomer(CustomerEntity customerEntity): Customer
+        package usecase {
+            interface InsertCustomerUseCase {
+                {abstract} + insert(Customer customer): void
+            }
+
+            class InsertCustomerUseCaseImpl {
+                - InsertCustomer insertCustomer
+                + insert(Customer customer): void
+
+            }
+        }
+        package dataprovider {
+            interface InsertCustomer {
+                {abstract} + insert(Customer customer): void
             }
         }
     }
+
 }
-package "entrypoint" {
+package entrypoint {
     class CustomerController {
         - insertCustomerUseCase: InsertCustomerUseCase
         - customerMapper: CustomerMapper
         + insert(CustomerRequest customerRequest): ResponseEntity<Void>
         + getById(String id) : ResponseEntity<CustomerResponse>
     }
-    package "request" {
+    package request {
         class CustomerRequest {
             - String name
             - String cpf
             - String zipCode
         }
     }
-    package "mapper" {
+    package mapper {
         interface CustomerMapper {
             {abstract} + toCustomer(CustomerRequest customerRequest): Customer
             {abstract} + toCustomerResponse(Customer customer): CustomerResponse
         }
     }
-    package "response" {
+    package response {
         class CustomerResponse {
             - String name
             - String cpf
@@ -132,4 +141,6 @@ CustomerResponse o- AddressResponse
 
 CustomerEntity o- AddressEntity
 Customer o- Address
+
+'Web --> CustomerController
 @enduml
