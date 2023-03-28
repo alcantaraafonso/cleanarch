@@ -1,84 +1,94 @@
 @startuml
+
+allowmixing
 ' -----------------------------------------------------
-'skinparam defaultTextAlignment center
-skinparam groupInheritance 2
+skinparam defaultTextAlignment center
+'skinparam groupInheritance 2
 ' -----------------------------------------------------
 'bottom to top direction
-left to right direction
-together {
-    package dataprovider {
-        class InsertCustomerImpl {
-            - CustomerRepository customerRepository
-            - CustomerEntityMapper customerEntityMapper
-            + insert(Customer customer): void
-        }
+'left to right direction
 
-        package repository {
-            interface CustomerRepository {
-            }
 
-            interface MongoRepository {
-                {abstract} + insert(CustomerEntity entity): CustomerEntity
-            }
-            package entity {
-                class CustomerEntity {
-                - String id
-                    - String name
-                    - String cpf
-                    - AddressEntity address
-                    - Boolean isValidCpf
-                }
 
-                class AddressEntity {
-                    - String street
-                    - String city
-                    - String state
-                }
-            }
-            package mapper {
-                interface CustomerEntityMapper {
-                    + toCustomerEntity(Customer customer): CustomerEntity
-                    + toCustomer(CustomerEntity customerEntity): Customer
-                }
-            }
-        }
+package dataprovider as DP{
+    note as N1
+      This note is <u>also</u>
+      <b><color:royalBlue>on several</color>
+      <s>words</s> lines
+      And this is hosted by <img:sourceforge.jpg>
+    end note
+    class InsertCustomerImpl {
+        - CustomerRepository customerRepository
+        - CustomerEntityMapper customerEntityMapper
+        + insert(Customer customer): void
     }
-    package core {
-        package domain {
-            class Customer {
-                - String id
+
+    package repository {
+        interface CustomerRepository {
+        }
+
+        interface MongoRepository {
+            {abstract} + insert(CustomerEntity entity): CustomerEntity
+        }
+        package entity {
+            class CustomerEntity {
+            - String id
                 - String name
                 - String cpf
-                - Address address
+                - AddressEntity address
                 - Boolean isValidCpf
             }
 
-            class Address {
+            class AddressEntity {
                 - String street
                 - String city
                 - String state
             }
         }
-        package usecase {
-            interface InsertCustomerUseCase {
-                {abstract} + insert(Customer customer): void
-            }
-
-            class InsertCustomerUseCaseImpl {
-                - InsertCustomer insertCustomer
-                + insert(Customer customer): void
-
-            }
-        }
-        package dataprovider {
-            interface InsertCustomer {
-                {abstract} + insert(Customer customer): void
+        package mapper {
+            interface CustomerEntityMapper {
+                + toCustomerEntity(Customer customer): CustomerEntity
+                + toCustomer(CustomerEntity customerEntity): Customer
             }
         }
     }
-
 }
-package entrypoint {
+package core as C{
+    package domain {
+        class Customer {
+            - String id
+            - String name
+            - String cpf
+            - Address address
+            - Boolean isValidCpf
+        }
+
+        class Address {
+            - String street
+            - String city
+            - String state
+        }
+    }
+    package usecase {
+        interface InsertCustomerUseCase {
+            {abstract} + insert(Customer customer): void
+        }
+
+        class InsertCustomerUseCaseImpl {
+            - InsertCustomer insertCustomer
+            + insert(Customer customer): void
+
+        }
+    }
+    package dataprovider {
+        interface InsertCustomer {
+            {abstract} + insert(Customer customer): void
+        }
+    }
+}
+
+
+package entrypoint as EP{
     class CustomerController {
         - insertCustomerUseCase: InsertCustomerUseCase
         - customerMapper: CustomerMapper
@@ -113,6 +123,7 @@ package entrypoint {
     }
 }
 
+'------Relacionamentos-----------
 InsertCustomerUseCase <|-- InsertCustomerUseCaseImpl
 InsertCustomer <|-- InsertCustomerImpl
 MongoRepository <|-- CustomerRepository
@@ -141,6 +152,11 @@ CustomerResponse o- AddressResponse
 
 CustomerEntity o- AddressEntity
 Customer o- Address
+'------Relacionamentos-----------
+'------Alinhamento-----------
+'C-up[hidden]-EP
+EP-down[hidden]-DP
+DP-up[hidden]-C
+'------fim Alinhamento-----------
 
-'Web --> CustomerController
 @enduml

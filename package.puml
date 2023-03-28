@@ -1,6 +1,6 @@
 @startuml
 
-package core as C {
+package core as C{
     package domain as D {
         class Customer {
             - String id
@@ -48,7 +48,7 @@ package dataprovider as DP{
         interface MongoRepository {
             {abstract} + insert(CustomerEntity entity): CustomerEntity
         }
-        package entity {
+        package entity as DP_R_E{
             class CustomerEntity {
             - String id
                 - String name
@@ -63,7 +63,7 @@ package dataprovider as DP{
                 - String state
             }
         }
-        package mapper {
+        package mapper as DP_R_M{
             interface CustomerEntityMapper {
                 + toCustomerEntity(Customer customer): CustomerEntity
                 + toCustomer(CustomerEntity customerEntity): Customer
@@ -109,10 +109,13 @@ package entrypoint as EP {
 }
 
 '-----------------
-EP-up[hidden]-C
-DP-down[hidden]-C
+'C-up[hidden]-EP
+EP-down[hidden]-DP
+DP-up[hidden]-C
+
 '----------------
 
+DP_R_M-up[hidden]-DP_R_E
 EP_M-up[hidden]-EP_RQ
 EP_RP-up[hidden]-EP_M
 @enduml
