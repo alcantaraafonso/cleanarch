@@ -109,13 +109,14 @@ package entrypoint as EP {
 }
 
 '-----------------
-'C-up[hidden]-EP
-EP-down[hidden]-DP
+EP-down[hidden]-C
 DP-up[hidden]-C
+EP-down[hidden]-DP
+
 
 '----------------
 
-DP_R_M-up[hidden]-DP_R_E
-EP_M-up[hidden]-EP_RQ
-EP_RP-up[hidden]-EP_M
+'DP_R_M-up[hidden]-DP_R_E
+'EP_M-up[hidden]-EP_RQ
+'EP_RP-up[hidden]-EP_M
 @enduml
