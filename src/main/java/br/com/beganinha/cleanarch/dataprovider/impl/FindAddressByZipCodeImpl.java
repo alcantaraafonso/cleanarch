@@ -1,4 +1,4 @@
-package br.com.beganinha.cleanarch.dataprovider;
+package br.com.beganinha.cleanarch.dataprovider.impl;
 
 import br.com.beganinha.cleanarch.core.dataprovider.FindAddressByZipCode;
 import br.com.beganinha.cleanarch.core.domain.Address;

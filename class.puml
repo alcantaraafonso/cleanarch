@@ -11,18 +11,13 @@ skinparam defaultTextAlignment center
 
 
 package dataprovider as DP{
-    note as N1
-      This note is <u>also</u>
-      <b><color:royalBlue>on several</color>
-      <s>words</s> lines
-      And this is hosted by <img:sourceforge.jpg>
-    end note
-    class InsertCustomerImpl {
-        - CustomerRepository customerRepository
-        - CustomerEntityMapper customerEntityMapper
-        + insert(Customer customer): void
+    package impl as impl {
+        class InsertCustomerImpl {
+            - CustomerRepository customerRepository
+            - CustomerEntityMapper customerEntityMapper
+            + insert(Customer customer): void
+        }
     }
-
     package repository {
         interface CustomerRepository {
         }
@@ -89,11 +84,13 @@ package core as C{
 
 
 package entrypoint as EP{
-    class CustomerController {
-        - insertCustomerUseCase: InsertCustomerUseCase
-        - customerMapper: CustomerMapper
-        + insert(CustomerRequest customerRequest): ResponseEntity<Void>
-        + getById(String id) : ResponseEntity<CustomerResponse>
+    package controller as controller {
+        class CustomerController {
+            - insertCustomerUseCase: InsertCustomerUseCase
+            - customerMapper: CustomerMapper
+            + insert(CustomerRequest customerRequest): ResponseEntity<Void>
+            + getById(String id) : ResponseEntity<CustomerResponse>
+        }
     }
     package request {
         class CustomerRequest {

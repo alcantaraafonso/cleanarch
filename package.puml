@@ -74,6 +74,7 @@ package dataprovider as DP{
 
 
 package entrypoint as EP {
+
     class CustomerController {
         - insertCustomerUseCase: InsertCustomerUseCase
         - customerMapper: CustomerMapper
