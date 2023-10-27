@@ -7,12 +7,12 @@ O Objetivo deste projeto é mostrar uma implementação da Clean Architecture em
 ## Libraries/Softwares
 
 São necessárias bibliotecas e softwares externas a este projeto, a fim de execuá-lo, a saber:
-[MongoDB](https://mongodb.com/)
+
 [WireMock](https://wiremock.org/docs/download-and-installation/)
 
 ## Dependências
 
-O gerenciador de dependências usado é o Maven, consulte o pom.xml para saber as dependências e versões utilizadas
+O gerenciador de dependências usado é o Maven, consulte o pom.xml para saber as dependências e versões utilizadas.
 
 ## Mock da API de endereços
 O projeto simula a conexão a uma API de busca de endereço e para tal é usado a biblioteca [WireMock]().
@@ -37,4 +37,13 @@ Para criar uma massa de dados, crie um arquivo JSON para cada endereço que quei
         }
     }
 }
+```
+
+## Rodando o projeto via docker
+### Images
+O projeto utiliza uma imagem do [MongoDB](https://mongodb.com/) como base de dados e uma imagem do OpenJDK Alpine.
+
+Para subir as imagens, execute o comando:
+```
+docker compose up -d --build
 ```
