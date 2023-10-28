@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 @RestController
@@ -26,18 +28,30 @@ public class CustomerContoller {
     private CustomerMapper customerMapper;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
+    public void insert(@Valid @RequestBody CustomerRequest customerRequest) {
         Customer customer = customerMapper.toCustomer(customerRequest);
         insertCustomerUseCase.insert(customer, customerRequest.getZipCode());
 
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> getById(@PathVariable("id") String id) {
-        Customer customer = findCustomerUseCase.findById(id);
-        CustomerResponse customerResponse = customerMapper.toCustomerResponse(customer);
+        try {
+            
+            Customer customer = findCustomerUseCase.findById(id);
+            System.out.println("customer: " + customer);
+            CustomerResponse customerResponse = customerMapper.toCustomerResponse(customer);
+            
+            return ResponseEntity.ok().body(customerResponse);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+        
+    }
 
-        return ResponseEntity.ok().body(customerResponse);
+    @GetMapping
+    public List<CustomerResponse> findAll() {
+        List<Customer> customers = findCustomerUseCase.findAll();
+        return customerMapper.toCustomerResponseList(customers);
     }
 }
