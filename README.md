@@ -47,3 +47,9 @@ Para subir as imagens, execute o comando:
 ```
 docker compose up -d --build
 ```
+
+A aplicação está preparada para rodar na porta 5000 e tem três rotas disponíveis POST para inserir e duas GET onde uma é para buscar um Customer pelo ID e outra para buscar todos.
+
+```
+http://localhost:5000/customers/
+```
